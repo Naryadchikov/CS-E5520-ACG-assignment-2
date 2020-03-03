@@ -60,17 +60,17 @@ namespace FW
                 ctx.m_light->sample(pdf, Pl, 0, rnd);
 
                 // construct vector from current vertex (o) to light sample
-                Vec3f ol = Pl - o;
+                Vec3f d = Pl - o;
 
                 // trace shadow ray to see if it's blocked
-                if (!ctx.m_rt->raycast(o, ol))
+                if (!ctx.m_rt->raycast(o, d))
                 {
                     // if not, add the appropriate emission, 1/r^2 and clamped cosine terms, accounting for the PDF as well.
                     // accumulate into E
-                    Vec3f unionOl = ol.normalized();
-                    float cosThetaL = FW::clamp(FW::dot(unionOl, -ctx.m_light->getNormal()), 0.f, 1.f);
-                    float cosTheta = FW::clamp(FW::dot(unionOl, n), 0.f, 1.f);
-                    float distance = ol.length();
+                    Vec3f unionD = d.normalized();
+                    float cosThetaL = FW::clamp(FW::dot(unionD, -ctx.m_light->getNormal()), 0.f, 1.f);
+                    float cosTheta = FW::clamp(FW::dot(unionD, n), 0.f, 1.f);
+                    float distance = d.length();
 
                     E += (ctx.m_light->getEmission() * cosThetaL * cosTheta) / (pdf * distance * distance);
                 }
