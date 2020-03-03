@@ -12,7 +12,7 @@ Student number:
 # and leave your 'attempt' code in place (commented out if necessary) so we can see it.
 
 R1 Integrate old raytracing code (1p): done
-            R2 Area light source (3p): not done
+            R2 Area light source (3p): done
                     R3 Radiosity (6p): not done
 
 # Did you do any extra credit work?

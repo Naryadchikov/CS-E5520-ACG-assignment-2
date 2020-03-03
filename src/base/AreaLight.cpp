@@ -9,7 +9,7 @@ namespace FW
         glMatrixMode(GL_PROJECTION);
         glLoadMatrixf((float*)&projection);
         glMatrixMode(GL_MODELVIEW);
-        Mat4f S = Mat4f::scale(Vec3f(m_size, 1));
+        Mat4f S = Mat4f::scale(Vec3f(m_size, 1.f));
         Mat4f M = worldToCamera * m_xform * S;
         glLoadMatrixf((float*)&M);
         glBegin(GL_TRIANGLES);
@@ -43,8 +43,10 @@ namespace FW
         // Use the "base" input for controlling the progression of the sequence from
         // the outside. If you only implement purely random sampling, "base" is not required.
 
-        // (this does not do what it's supposed to!)
-        pdf = 1.0f;
-        p = Vec4f(m_xform.getCol(3)).getXYZ();
+        Vec4f rndPoint = Vec4f(rnd.getVec2f(), 0.f, 1.f);
+        Mat4f S = Mat4f::scale(Vec3f(m_size, 1.f));
+
+        p = (m_xform * S * rndPoint).getXYZ();
+        pdf = 1.f / (4.f * m_size.x * m_size.y);
     }
 } // namespace FW

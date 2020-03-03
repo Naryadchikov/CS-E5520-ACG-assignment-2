@@ -45,82 +45,89 @@ namespace FW
         // an idea of the loop structure. Note that you also have to account
         // for how diffuse textures modulate the irradiance.
 
-
-        // This is the dummy implementation you should remove.
-        ctx.m_vecResult[v] = n * 0.5 + 0.5;
-        Sleep(1);
-        return;
-
-        /*
         // direct lighting pass? => integrate direct illumination by shooting shadow rays to light source
-        if ( ctx.m_currentBounce == 0 )
+        if (ctx.m_currentBounce == 0)
         {
             Vec3f E(0);
-            for ( int r = 0; r < ctx.m_numDirectRays; ++r )
+            Random rnd;
+
+            for (int r = 0; r < ctx.m_numDirectRays; ++r)
             {
                 // draw sample on light source
                 float pdf;
                 Vec3f Pl;
-    
+
+                ctx.m_light->sample(pdf, Pl, 0, rnd);
+
                 // construct vector from current vertex (o) to light sample
-    
+                Vec3f ol = Pl - o;
+
                 // trace shadow ray to see if it's blocked
+                if (!ctx.m_rt->raycast(o, ol))
                 {
                     // if not, add the appropriate emission, 1/r^2 and clamped cosine terms, accounting for the PDF as well.
                     // accumulate into E
+                    Vec3f unionOl = ol.normalized();
+                    float cosThetaL = FW::clamp(FW::dot(unionOl, -ctx.m_light->getNormal()), 0.f, 1.f);
+                    float cosTheta = FW::clamp(FW::dot(unionOl, n), 0.f, 1.f);
+                    float distance = ol.length();
+
+                    E += (ctx.m_light->getEmission() * cosThetaL * cosTheta) / (pdf * distance * distance);
                 }
             }
             // Note we are NOT multiplying by PI here;
             // it's implicit in the hemisphere-to-light source area change of variables.
             // The result we are computing is _irradiance_, not radiosity.
-            ctx.m_vecCurr[ v ] = E * (1.0f/ctx.m_numDirectRays);
-            ctx.m_vecResult[ v ] = ctx.m_vecCurr[ v ];
+            ctx.m_vecCurr[v] = E * (1.f / ctx.m_numDirectRays);
+            ctx.m_vecResult[v] = ctx.m_vecCurr[v];
         }
-        else
+        /*else
         {
             // OK, time for indirect!
             // Implement hemispherical gathering integral for bounces > 1.
-    
+
             // Get local coordinate system the rays are shot from.
-            Mat3f B = formBasis( n );
-    
+            Mat3f B = formBasis(n);
+
             Vec3f E(0.0f);
-            for ( int r = 0; r < ctx.m_numHemisphereRays; ++r )
+
+            for (int r = 0; r < ctx.m_numHemisphereRays; ++r)
             {
                 // Draw a cosine weighted direction and find out where it hits (if anywhere)
                 // You need to transform it from the local frame to the vertex' hemisphere using B.
-    
+
                 // Make the direction long but not too long to avoid numerical instability in the ray tracer.
                 // For our scenes, 100 is a good length. (I know, this special casing sucks.)
-    
+
                 // Shoot ray, see where we hit
-                const RaycastResult result = ctx.m_rt->raycast( o, d );
-                if ( result.tri != nullptr )
+                const RaycastResult result = ctx.m_rt->raycast(o, d);
+
+                if (result.tri != nullptr)
                 {
                     // interpolate lighting from previous pass
                     const Vec3i& indices = result.tri->m_data.vertex_indices;
-    
+
                     // check for backfaces => don't accumulate if we hit a surface from below!
-    
+
                     // fetch barycentric coordinates
-    
+
                     // Ei = interpolated irradiance determined by ctx.m_vecPrevBounce from vertices using the barycentric coordinates
-                    Vec3f Ei = ...
-    
+                    Vec3f Ei = 
+                    ...
+
                     // Divide incident irradiance by PI so that we can turn it into outgoing
                     // radiosity by multiplying by the reflectance factor below.
                     Ei *= (1.0f / FW_PI);
-    
+
                     // check for texture
                     const auto mat = result.tri->m_material;
-                    if ( mat->textures[MeshBase::TextureType_Diffuse].exists() )
+                    if (mat->textures[MeshBase::TextureType_Diffuse].exists())
                     {
-                        
                         // read diffuse texture like in assignment1
-    
+
                         const Texture& tex = mat->textures[MeshBase::TextureType_Diffuse];
                         const Image& teximg = *tex.getImage();
-    
+
                         // ...
                     }
                     else
@@ -128,21 +135,20 @@ namespace FW
                         // no texture, use constant albedo from material structure.
                         // (this is just one line)
                     }
-    
-                    E += Ei;	// accumulate
+
+                    E += Ei; // accumulate
                 }
             }
             // Store result for this bounce
             // Note that since we are storing irradiance, we multiply by PI(
             // (Remember the slides about cosine weighted importance sampling!)
-            ctx.m_vecCurr[ v ] = E * (FW_PI / ctx.m_numHemisphereRays);
+            ctx.m_vecCurr[v] = E * (FW_PI / ctx.m_numHemisphereRays);
             // Also add to the global accumulator.
-            ctx.m_vecResult[ v ] = ctx.m_vecResult[ v ] + ctx.m_vecCurr[ v ];
-    
+            ctx.m_vecResult[v] = ctx.m_vecResult[v] + ctx.m_vecCurr[v];
+
             // uncomment this to visualize only the current bounce
-            //ctx.m_vecResult[ v ] = ctx.m_vecCurr[ v ];	
-        }
-        */
+            // ctx.m_vecResult[v] = ctx.m_vecCurr[v];
+        }*/
     }
 
     // --------------------------------------------------------------------------
@@ -176,8 +182,11 @@ namespace FW
         m_context.m_vecSphericalZ.assign(scene->numVertices(), Vec3f(0, 0, 0));
 
         // fire away!
-        //m_launcher.setNumThreads(m_launcher.getNumCores());	// the solution exe is multithreaded
-        m_launcher.setNumThreads(1); // but you have to make sure your code is thread safe before enabling this!
+        // the solution exe is multithreaded
+        // but you have to make sure your code is thread safe before enabling this!
+        m_launcher.setNumThreads(m_launcher.getNumCores());
+        //m_launcher.setNumThreads(1);
+
         m_launcher.popAll();
         m_launcher.push(vertexTaskFunc, &m_context, 0, scene->numVertices());
     }
