@@ -1,0 +1,326 @@
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  Deep Exploration 5 5.0.4.1777 Release
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+
+newmtl sp_00_luk_mali
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd SP_LUK.jpg
+map_bump SP_LUK.jpg
+bump SP_LUK.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_svod_kapitel
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd 00_SKAP.jpg
+map_bump 00_SKAP.jpg
+bump 00_SKAP.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_01_stub_baza_
+Ka 0 0 0
+Kd 0.784314 0.784314 0.784314
+Ks 0 0 0
+illum 2
+Ns 8
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_01_stub_kut
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd 01_STUB.jpg
+map_bump 01_STUB.jpg
+bump 01_STUB.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_00_stup
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd 01_STUB.jpg
+map_bump 01_STUB.jpg
+bump 01_STUB.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_01_stub_baza
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd 01_S_BA.jpg
+map_bump 01_S_BA.jpg
+bump 01_S_BA.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_00_luk_mal1
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd 01_ST_KP.jpg
+map_bump SP_LUK.jpg
+bump SP_LUK.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_01_stub
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd 01_STUB.jpg
+map_bump 01_STUB.jpg
+bump 01_STUB.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_01_stup
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd X01_ST.jpg
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_vijenac
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd 00_SKAP.jpg
+map_bump 00_SKAP.jpg
+bump 00_SKAP.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_00_svod
+Ka 0.145098 0.145098 0.145098
+Kd 0.941177 0.866667 0.737255
+Ks 0.85098 0.807843 0.733333
+illum 2
+Ns 2.14355
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_02_reljef
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd RELJEF.jpg
+map_bump RELJEF.jpg
+bump RELJEF.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_01_luk_a
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd SP_LUK.jpg
+map_bump SP_LUK.jpg
+bump SP_LUK.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_01_stup_baza
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd 01_S_BA.jpg
+map_bump 01_S_BA.jpg
+bump 01_S_BA.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_00_zid
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd KAMEN.jpg
+map_bump KAMEN.jpg
+bump KAMEN.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_00_prozor
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd PROZOR1.jpg
+map_bump PROZOR1.jpg
+bump PROZOR1.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_00_vrata_krug
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 8
+map_Kd VRATA_KR.jpg
+map_bump VRATA_KR.jpg
+bump VRATA_KR.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Explorer_Default
+Ka 0.117647 0.117647 0.117647
+Kd 0.752941 0.752941 0.752941
+Ks 0.752941 0.752941 0.752941
+illum 2
+Ns 8
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_00_vrata_kock
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 8
+map_Kd VRATA_KO.jpg
+map_bump VRATA_KO.jpg
+bump VRATA_KO.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl sp_00_pod
+Ka 0 0 0
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 64
+map_Kd KAMEN.jpg
+map_bump KAMEN.jpg
+bump KAMEN.jpg
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
