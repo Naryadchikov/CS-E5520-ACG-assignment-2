@@ -27,6 +27,8 @@ namespace FW
         if (ctx.m_bForceExit)
             return;
 
+        Random rnd;
+
         // which vertex are we to compute?
         int v = task.idx;
 
@@ -48,8 +50,7 @@ namespace FW
         // direct lighting pass? => integrate direct illumination by shooting shadow rays to light source
         if (ctx.m_currentBounce == 0)
         {
-            Vec3f E(0);
-            Random rnd;
+            Vec3f E(0.f);
 
             for (int r = 0; r < ctx.m_numDirectRays; ++r)
             {
@@ -81,7 +82,7 @@ namespace FW
             ctx.m_vecCurr[v] = E * (1.f / ctx.m_numDirectRays);
             ctx.m_vecResult[v] = ctx.m_vecCurr[v];
         }
-        /*else
+        else
         {
             // OK, time for indirect!
             // Implement hemispherical gathering integral for bounces > 1.
@@ -89,17 +90,25 @@ namespace FW
             // Get local coordinate system the rays are shot from.
             Mat3f B = formBasis(n);
 
-            Vec3f E(0.0f);
+            Vec3f E(0.f);
 
             for (int r = 0; r < ctx.m_numHemisphereRays; ++r)
             {
                 // Draw a cosine weighted direction and find out where it hits (if anywhere)
                 // You need to transform it from the local frame to the vertex' hemisphere using B.
+                Vec2f rv = rnd.getVec2f();
+                float sqrtX = FW::sqrt(rv.x);
+                float theta = 2.f * FW_PI * rv.y;
+                Vec3f cwd = B * Vec3f(sqrtX * FW::cos(theta),
+                                      sqrtX * FW::sin(theta),
+                                      FW::sqrt(FW::max(0.f, 1.f - rv.x)));
 
                 // Make the direction long but not too long to avoid numerical instability in the ray tracer.
                 // For our scenes, 100 is a good length. (I know, this special casing sucks.)
+                float dirScale = 100.f;
 
                 // Shoot ray, see where we hit
+                Vec3f d = dirScale * cwd;
                 const RaycastResult result = ctx.m_rt->raycast(o, d);
 
                 if (result.tri != nullptr)
@@ -108,32 +117,44 @@ namespace FW
                     const Vec3i& indices = result.tri->m_data.vertex_indices;
 
                     // check for backfaces => don't accumulate if we hit a surface from below!
+                    if (FW::dot(d, -result.tri->normal()) < 0.f)
+                    {
+                        continue;
+                    }
 
                     // fetch barycentric coordinates
+                    float alpha = result.u;
+                    float beta = result.v;
 
                     // Ei = interpolated irradiance determined by ctx.m_vecPrevBounce from vertices using the barycentric coordinates
-                    Vec3f Ei = 
-                    ...
+                    Vec3f Ei = alpha * ctx.m_vecPrevBounce[indices[0]] +
+                        beta * ctx.m_vecPrevBounce[indices[1]] +
+                        (1.f - alpha - beta) * ctx.m_vecPrevBounce[indices[2]];
 
                     // Divide incident irradiance by PI so that we can turn it into outgoing
                     // radiosity by multiplying by the reflectance factor below.
-                    Ei *= (1.0f / FW_PI);
+                    Ei *= (1.f / FW_PI);
 
                     // check for texture
                     const auto mat = result.tri->m_material;
+
                     if (mat->textures[MeshBase::TextureType_Diffuse].exists())
                     {
                         // read diffuse texture like in assignment1
-
                         const Texture& tex = mat->textures[MeshBase::TextureType_Diffuse];
-                        const Image& teximg = *tex.getImage();
+                        const Image& texImg = *tex.getImage();
 
-                        // ...
+                        Vec2f uv = alpha * ctx.m_scene->vertex(indices[0]).t +
+                            beta * ctx.m_scene->vertex(indices[1]).t +
+                            (1.f - alpha - beta) * ctx.m_scene->vertex(indices[2]).t;
+
+                        Ei *= texImg.getVec4f(FW::getTexelCoords(uv, texImg.getSize())).getXYZ();
                     }
                     else
                     {
                         // no texture, use constant albedo from material structure.
                         // (this is just one line)
+                        Ei *= mat->diffuse.getXYZ();
                     }
 
                     E += Ei; // accumulate
@@ -143,12 +164,13 @@ namespace FW
             // Note that since we are storing irradiance, we multiply by PI(
             // (Remember the slides about cosine weighted importance sampling!)
             ctx.m_vecCurr[v] = E * (FW_PI / ctx.m_numHemisphereRays);
+
             // Also add to the global accumulator.
             ctx.m_vecResult[v] = ctx.m_vecResult[v] + ctx.m_vecCurr[v];
 
             // uncomment this to visualize only the current bounce
             // ctx.m_vecResult[v] = ctx.m_vecCurr[v];
-        }*/
+        }
     }
 
     // --------------------------------------------------------------------------
