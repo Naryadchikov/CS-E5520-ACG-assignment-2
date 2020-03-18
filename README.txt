@@ -17,17 +17,18 @@ R1 Integrate old raytracing code (1p): done
 
 # Did you do any extra credit work?
 
-(Describe what you did and, if there was a substantial amount of work involved, how you did it. If your extra features are interactive or can be toggled, describe how to use them.)
+No
 
 # Are there any known problems/bugs remaining in your code?
 
-(Please provide a list of the problems. If possible, describe what you think the cause is, how you have attempted to diagnose or fix the problem, and how you would attempt to diagnose or fix it if you had more time or motivation. This is important: we are more likely to assign partial credit if you help us understand what's going on.)
+No
 
 # Did you collaborate with anyone in the class?
 
-(Did you help others? Did others help you? Let us know who you talked to, and what sort of help you gave or received.)
+No
 
 # Any other comments you'd like to share about the assignment or the course so far?
 
-(Was the assignment too long? Too hard? Fun or boring? Did you learn something, or was it a total waste of time? Can we do something differently to help you learn? Please be brutally honest; we won't take it personally.)
+As same as with previous assignment I've enjoyed working on current one, it is super cool when you instantly see what you a doing.
+However, I haven't had enough time to do any extra this time, will try to change it in the future!
 
